@@ -1,13 +1,16 @@
 pipeline {
     agent any
     triggers {
-        cron('*/1 * * * *')
+        githubPush()
+        cron('*/15 * * * *')
     }
     stages {
         stage('Build') {
             steps {
                 sh '''
-                echo test
+                git clone https://github.com/HighLandner/docker_agent.git
+                cd docker_agent
+                docker build -t custom:v1 .
                 '''
             }
 
