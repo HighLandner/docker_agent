@@ -22,6 +22,9 @@ pipeline {
             }
         }
     }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
     post {
         always {
             cleanWs deleteDirs: true
