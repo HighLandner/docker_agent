@@ -9,9 +9,6 @@ RUN apt-get update && \
         libfreetype6 \
         nginx
 
-COPY bootstrap.sh /usr/share/jenkins/
-RUN chmod +x bootstrap.sh && /usr/share/jenkins/bootstrap.sh
-
 ARG user=jenkins
 
 COPY --from=jnlp /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-agent
