@@ -8,7 +8,6 @@ pipeline {
         stage('SCM') {
             steps {
                 sh '''
-                git clone https://github.com/HighLandner/docker_agent.git
                 ls -la docker_agent/Dockerfiles
                 '''
             }
