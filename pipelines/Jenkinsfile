@@ -1,20 +1,33 @@
 pipeline {
     agent any
-    triggers {
-        githubPush()
-        cron('*/15 * * * *')
-    }
+    // triggers {
+    //     githubPush()
+    //     cron('*/15 * * * *')
+    // }
     stages {
-        stage('Build') {
+        stage('SCM') {
             steps {
                 sh '''
                 git clone https://github.com/HighLandner/docker_agent.git
-                cd docker_agent
+                ls -la docker_agent/Dockerfiles
+                '''
+            }
+        }
+        stage('Docker build'){
+            steps {
+                sh '''
+                cd docker_agent/Dockerfiles
                 docker build -t custom:v1 .
                 '''
             }
-
-            }
         }
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    post {
+        always {
+            cleanWs deleteDirs: true
+        }
+    }
 }
-
