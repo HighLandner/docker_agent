@@ -1,28 +1,49 @@
-pipeline {
-    agent any
-    // triggers {
-    //     githubPush()
-    //     cron('*/15 * * * *')
-    // }
+// pipeline {
+//     agent any
+//     // triggers {
+//     //     githubPush()
+//     //     cron('*/15 * * * *')
+//     // }
+//     options {
+//         buildDiscarder(logRotator(numToKeepStr: '5'))
+//     }
+//     stages {
+//         stage('SCM') {
+//             steps {
+//                 sh '''
+//                 git clone https://github.com/HighLandner/docker_agent.git
+//                 ls -la docker_agent/Dockerfiles
+//                 '''
+//             }
+//         }
+//         stage('Docker build'){
+//             steps {
+//                 sh '''
+//                 cd docker_agent/Dockerfiles
+//                 docker build -t custom:v1 .
+//                 '''
+//             }
+//         }
+//     }
+//     post {
+//         always {
+//             cleanWs deleteDirs: true
+//         }
+//     }
+// }
+
+node {
+    String branchName = 'jenkins_setup'
+    String repoUrl = 'https://github.com/HighLandner/docker_agent'
+    
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
-    stages {
-        stage('SCM') {
-            steps {
-                sh '''
-                git clone https://github.com/HighLandner/docker_agent.git
-                ls -la docker_agent/Dockerfiles
-                '''
-            }
-        }
-        stage('Docker build'){
-            steps {
-                sh '''
-                cd docker_agent/Dockerfiles
-                docker build -t custom:v1 .
-                '''
-            }
+
+    stage('Clone') {
+        sh 'mkdir -p build'
+        dir('build') {
+            git branch: branchName, url: repoUrl
         }
     }
     post {
