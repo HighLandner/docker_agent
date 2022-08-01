@@ -31,7 +31,7 @@ pipeline {
                     pwd
                     cd docker_agent/Dockerfiles
                     '''
-                    dockerImage = docker.build("${env.imageName}:${env.imageTag}"[, docker_agent/Dockerfiles])
+                    dockerImage = docker.build(["${env.imageName}:${env.imageTag}", docker_agent/Dockerfiles])
                 }
             }
         }
