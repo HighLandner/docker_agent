@@ -1,16 +1,20 @@
 pipeline {
+    agent any
+
     environment {
         imageName = "custom"
-        iamgeTag  = "v1 "
+        iamgeTag  = "v1"
     }
-    agent any
+
     // triggers {
     //     githubPush()
     //     cron('*/15 * * * *')
     // }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
+
     stages {
         stage('SCM') {
             steps {
@@ -26,11 +30,12 @@ pipeline {
                     sh '''
                     cd docker_agent/Dockerfiles
                     '''
-                    dockerImage = docker.build("$imageName:$imageTag")
+                    dockerImage = docker.build("$env.imageName:$env.imageTag")
                 }
             }
         }
     }
+
     post {
         always {
             cleanWs deleteDirs: true
