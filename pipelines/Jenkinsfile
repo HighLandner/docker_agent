@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh '''
                 git clone https://github.com/HighLandner/docker_agent.git
-                ls -la docker_agent/Dockerfiles
+                ls -la
                 '''
             }
         }
@@ -29,9 +29,8 @@ pipeline {
                 script {
                     sh '''
                     pwd
-                    cd docker_agent/Dockerfiles
                     '''
-                    dockerImage = docker.build(["${env.imageName}:${env.imageTag}", Dockerfiles])
+                    dockerImage = docker.build("${env.imageName}:${env.imageTag}")
                 }
             }
         }
