@@ -28,6 +28,7 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    pwd
                     cd docker_agent/Dockerfiles
                     '''
                     dockerImage = docker.build("${env.imageName}:${env.imageTag}")
