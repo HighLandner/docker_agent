@@ -30,7 +30,7 @@ pipeline {
                     sh '''
                     cd docker_agent/Dockerfiles
                     '''
-                    dockerImage = docker.build("$env.imageName:$env.imageTag")
+                    dockerImage = docker.build("${env.imageName}:${env.imageTag}")
                 }
             }
         }
