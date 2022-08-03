@@ -7,6 +7,7 @@ pipeline {
         imageName = "custom"
         imageTag  = "v1"
         registryCredentials = "dockerhub_id"
+        emailAdresses = ["eevvggbbeerr@gmail.com"]
     }
 
     // triggers {
@@ -51,6 +52,16 @@ pipeline {
     post {
         always {
             cleanWs deleteDirs: true
+        }
+        failure {
+            emailext body: '${JOB_NAME} status failed',
+                subject: 'Job execution status',
+                to: emailAdresses
+        }
+        success {
+            emailext body: '${JOB_NAME} status successed',
+                subject: 'Job execution status',
+                to: emailAdresses
         }
     }
 }
