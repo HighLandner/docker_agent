@@ -56,7 +56,7 @@ pipeline {
         failure {
             emailext body: '${JOB_NAME} status failed',
                 subject: 'Job execution status',
-                to: emailAdresses
+                to: emailAdress
         }
         success {
             emailext body: '${JOB_NAME} status successed',
