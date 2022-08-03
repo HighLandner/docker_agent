@@ -7,7 +7,7 @@ pipeline {
         imageName = "custom"
         imageTag  = "v1"
         registryCredentials = "dockerhub_id"
-        emailAdresses = ["eevvggbbeerr@gmail.com"]
+        emailAdress = "eevvggbbeerr@gmail.com"
     }
 
     // triggers {
@@ -61,7 +61,7 @@ pipeline {
         success {
             emailext body: '${JOB_NAME} status successed',
                 subject: 'Job execution status',
-                to: emailAdresses
+                to: emailAdress
         }
     }
 }
