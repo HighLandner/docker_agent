@@ -1,9 +1,11 @@
+// email notifications
+
 pipeline {
     agent any
 
     environment {
         imageName = "custom"
-        iamgeTag  = "v1"
+        imageTag  = "v1"
     }
 
     // triggers {
@@ -31,6 +33,13 @@ pipeline {
                     pwd
                     '''
                     dockerImage = docker.build("${env.imageName}:${env.imageTag}")
+                }
+            }
+        }
+        stage('Docker push'){
+            steps {
+                script {
+                    dockerImage.push()
                 }
             }
         }
